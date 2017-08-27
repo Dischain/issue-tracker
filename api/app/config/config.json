@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "db": {
+      "username": "",
+      "password": "",
+      "host": "localhost",
+      "port": "27017",
+      "name": "issue_tracker_db"
+    }
+  }, 
+
+  "prod": {
+    
+  }
+}
