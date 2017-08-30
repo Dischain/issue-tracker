@@ -11,6 +11,7 @@ const DEFAULT_AVATAR = '';
 const UserSchema = new Schema({
   userName: { type: String, unique: true, required: true, trim: true },
   email: { type: String, unique: true, trim: true, required: true },
+  userId: { type: Number, default: 1 },
   password: { type: String, required: true },
   socialId: { type: String, default: null },
   avatar:  { type: String, default:  DEFAULT_AVATAR}
@@ -18,7 +19,6 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   const user = this;
-  console.log('user ' + user);
   if (!user.avatar) user.avatar = DEFAULT_AVATAR;
 
   bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
@@ -43,6 +43,8 @@ UserSchema.methods.validatePassword = function(password) {
     });
   });
 }
+
+UserSchema.plugin(autoIncrement.plugin, { model: 'user', field: 'userId' });
 
 const UserModel = Mongoose.model('user', UserSchema);
 
