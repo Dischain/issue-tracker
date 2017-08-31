@@ -6,6 +6,10 @@
       "host": "localhost",
       "port": "27017",
       "name": "issue_tracker_db"
+    },
+    "app": {
+      "port": "3000",
+      "host": "localhost"
     }
   }, 
 
