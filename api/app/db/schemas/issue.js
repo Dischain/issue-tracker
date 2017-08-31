@@ -18,7 +18,7 @@ const IssueSchema = new Schema({
   timestamps: true
 });
 
-IssueSchema.plugin(autoIncrement.plugin, { model: 'issue', field: 'issueId' });
+IssueSchema.plugin(autoIncrement.plugin, { model: 'issue', field: 'issueId', startAt: 1 });
 
 const IssueModel = Mongoose.model('issue', IssueSchema);
 

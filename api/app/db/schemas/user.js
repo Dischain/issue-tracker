@@ -1,6 +1,8 @@
 'use strict';
 
 const Mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
+
 const Schema = Mongoose.Schema;
 
 const bcrypt = require('bcrypt-nodejs');
