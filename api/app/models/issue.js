@@ -21,12 +21,41 @@ function filterByStatus(filter) {
   return IssueModel.find(filter);
 }
 
-function getAll() {
-  return IssueModel.findAll();
+function findById(issueId) {
+  return IssueModel.findOne({issueId: issueId});
+}
+
+function findAll() {
+  return IssueModel.find({});
+}
+
+function deleteById(issueId) {
+  return IssueModel.remove({issueId: issueId});
+}
+
+function deleteAll() {
+  return IssueModel.remove({});
+}
+
+function update(issueId, updateData) {
+  console.log(updateData);
+  return IssueModel.findOne({ issueId: issueId })
+  .then((issue) => {
+      Object.keys(issue._doc).forEach((key) => {
+        updateData[key] && (issue[key] = updateData[key]);
+      });
+      console.log('whole issue');
+      console.log(issue)
+      return issue.save();
+  });
 }
 
 module.exports = {
   filterByStatus: filterByStatus,
   create: create,
-  getAll: getAll
+  findById: findById,
+  findAll: findAll,
+  deleteById: deleteById,
+  deleteAll: deleteAll,
+  update: update
 };
