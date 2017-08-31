@@ -19,8 +19,8 @@ function create(userData) {
   return user.save();
 }
 
-function findOne(criteria) {
-  return UserModel.findOne(criteria);
+function findById(userId) {
+  return UserModel.findOne({userId: userId});
 }
 
 function find(criteria) {
@@ -34,6 +34,6 @@ function findAll() {
 module.exports = {
   create: create,
   find: find,
-  findOne: findOne,
+  findById: findById,
   findAll: findAll
 };
