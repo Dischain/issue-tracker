@@ -30,7 +30,6 @@ UserSchema.pre('save', function(next) {
       if (err) return next(err);
 
       user.password = hash;
-      console.log(hash);
       next();
     });
   });
@@ -40,13 +39,13 @@ UserSchema.methods.validatePassword = function(password) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, isMatch) => {
       if (err) return reject(err);
-
+      console.log('user schema: validate password ' + isMatch);
       resolve(isMatch);
     });
   });
 }
 
-UserSchema.plugin(autoIncrement.plugin, { model: 'user', field: 'userId' });
+UserSchema.plugin(autoIncrement.plugin, { model: 'user', field: 'userId', startAt: 1 });
 
 const UserModel = Mongoose.model('user', UserSchema);
 

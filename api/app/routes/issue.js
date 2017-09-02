@@ -3,8 +3,9 @@
 const router = require('express').Router();
 
 const Issues = require('../models/issue.js');
+const Users = require('../models/user.js');
 
-router.get('/issues', (req, res) => {
+router.get('/issues', Users.isAuthenticated, (req, res) => {
   Issues.findAll()
   .then((data) => {
     res.json(data);
@@ -15,7 +16,7 @@ router.get('/issues', (req, res) => {
   })
 });
 
-router.get('/issues/:status', (req, res) => {
+router.get('/issues/:status', Users.isAuthenticated, (req, res) => {
   const criteria = {};
   criteria.status = req.params.status;
 
@@ -30,12 +31,14 @@ router.get('/issues/:status', (req, res) => {
     });
 });
 
-router.post('/issues', (req, res) => {
+router.post('/issues', Users.isAuthenticated, (req, res) => {
   const issueData = req.body;
+  issueData._owner = req.user._id;
+  issueData.ownerId = req.user.userId;
 
   Issues.create(issueData)
   .then(() => {
-      res.status(201); res.end();
+      res.status(201); res.json(issueData);
   })
   .catch((err) => {
       res.status(500); 
@@ -43,7 +46,7 @@ router.post('/issues', (req, res) => {
   });
 });
 
-router.put('/issues/:issueId', (req, res) => {
+router.put('/issues/:issueId', Users.isAuthenticated, (req, res) => {
   const issueId = req.params.issueId;
   const updateData = req.body;
 
@@ -57,10 +60,19 @@ router.put('/issues/:issueId', (req, res) => {
   });
 });
 
-router.delete('/issues/:issueId', (req, res) => {
+router.delete('/issues/:issueId', Users.isAuthenticated, (req, res) => {
   const issueId = req.body.issueId;
 
   Issues.deleteById(issueId)
+  .then(() => { res.status(200); res.end(); })
+  .catch((err) => {
+    res.status(500); 
+    res.json({message: 'Internal Server Error: ' + err });
+  });
+});
+
+router.delete('/issues', (req, res) => {
+  Issues.deleteAll()
   .then(() => { res.status(200); res.end(); })
   .catch((err) => {
     res.status(500); 

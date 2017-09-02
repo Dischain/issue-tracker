@@ -5,9 +5,18 @@ const passport = require('passport');
 
 const Users = require('../models/user.js');
 
-router.get('/:userId', (req, res) => {
+router.get('/', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect('/users');
+  } else {
+    res.status(403);
+    res.json({ 'msg': 'Please log in' });
+  }
+});
+
+router.get('/users/:userId', (req, res) => {
   const userId = req.params.userId;
-  
+
   Users.findById(userId)
   .then((user) => {
     if (user) {
@@ -22,23 +31,52 @@ router.get('/:userId', (req, res) => {
   });
 });
 
+router.get('/users', (req, res) => {
+  Users.findAll()
+  .then((users) => {
+    console.log('users get all');
+    console.log(req.session);
+    console.log(req.isAuthenticated());
+    res.json(users);
+  })
+  .catch((err) => {
+    res.status(500).
+    json({ message: 'Internal Server Error: ' + err });
+  });
+});
+
+router.delete('/users', (req, res) => {
+  Users.deleteAll()
+  .then(() => { res.status(200); res.end(); })
+  .catch((err) => {
+    res.status(500).
+    json({ message: 'Internal Server Error: ' + err });
+  });
+});
+
 router.post('/register', (req, res) => {
   const credentials = {
-    'username': req.body.username, 
+    'userName': req.body.userName, 
     'password': req.body.password,
     'email': req.body.email
   };
-
-  Users.find({ username: { $regex: new RegExp('^' + credentials.username + '$', 'i')}, socialId: null })
+  Users.find({ email: credentials.email, socialId: null })
   .then((user) => {
     if(user){
-      res.send({ message: 'Username already exists' });
+      res.status(409);
+      res.json({ message: 'Username already exists' });
       res.redirect('/register');
-      res.end();
     } else {
       Users.create(credentials)
-      then(() => {
-        res.redirect('/');
+      .then((user) => {
+        const userData = {
+          userName: user.userName,
+          email: user.email,
+          userId: user.userIds
+        }
+
+        res.status(201);
+        res.json(user);
       })
       .catch((err) => {
         res.status(500).
@@ -48,10 +86,22 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.post('/login', passport.authenticate('local', { 
-  successRedirect: '/', 
-  failureRedirect: '/login'
-}));
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+
+    if (user) {
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        console.log('user logged in'); console.log(req.user); console.log(req.isAuthenticated()); console.log(req.session);
+        res.redirect('/users');
+      });
+    } else {
+      console.log('post login redirecting');
+      res.redirect('/');
+    }
+  })(req, res, next);
+});
 
 router.get('/logout', function(req, res) {
   req.logout();

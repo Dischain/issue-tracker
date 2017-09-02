@@ -24,16 +24,32 @@ function findById(userId) {
 }
 
 function find(criteria) {
-  return UserModel.find(criteria);
+  return UserModel.findOne(criteria);
 }
 
 function findAll() { 
   return UserModel.find({});
 }
 
+function isAuthenticated(req, res, next) {
+  console.log('user model: isAuthenticated ' + req.isAuthenticated())
+  console.log(req.user);
+	if(req.isAuthenticated()){
+		next();
+	}else{
+		res.redirect('/');
+	}
+}
+
+function deleteAll() {
+  return UserModel.remove({});
+}
+
 module.exports = {
   create: create,
   find: find,
   findById: findById,
-  findAll: findAll
+  findAll: findAll,
+  isAuthenticated: isAuthenticated,
+  deleteAll: deleteAll
 };

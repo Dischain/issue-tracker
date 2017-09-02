@@ -6,19 +6,26 @@ const User = require('../models/user.js');
 
 let init = function() {
   passport.serializeUser(function(user, done) {
+    console.log('passport: serializeUser')
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findById({id})
-      .then((user) => done(err, user));
+    console.log('passport: deserializeUser')
+    console.log(id)
+    User.find({ _id: id })
+      .then((user) => done(null, user));
   });
 
-  passport.use(new LocalStrategy(function(username, password, done) {
-    User.findById({ username: { $regex: new RegExp('^' + username + '$', 'i')}, socialId: null })
+  passport.use(new LocalStrategy({
+      usernameField: 'email',
+      passwordField: 'password'
+    }, (email, password, done) => {
+
+      User.find({ email: email, socialId: null })
       .then((user) => {
         if (!user) {
-          return done(null, false, { message: 'Incorrect username or password.' });
+          return done(null, false, { message: 'Incorrect email or password.' });
         }
 
         user.validatePassword(password)

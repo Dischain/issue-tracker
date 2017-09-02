@@ -44,8 +44,7 @@ function update(issueId, updateData) {
       Object.keys(issue._doc).forEach((key) => {
         updateData[key] && (issue[key] = updateData[key]);
       });
-      console.log('whole issue');
-      console.log(issue)
+
       return issue.save();
   });
 }
