@@ -17,6 +17,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "connect-redis": "^3.3.0",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "mongodb": "^2.2.31",
@@ -26,7 +27,8 @@
     "passport-local": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-router": "^4.2.0"
+    "react-router": "^4.2.0",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",

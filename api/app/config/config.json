@@ -7,6 +7,12 @@
       "port": "27017",
       "name": "issue_tracker_db"
     },
+    "session": {
+      "host": "localhost",
+      "port": "6379",
+      "ttl": "3600",
+      "secret": "secret"
+    },
     "app": {
       "port": "3000",
       "host": "localhost"
