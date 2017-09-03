@@ -21,7 +21,11 @@ describe('Issues Routes', () => {
     title: 'some test title'
   };
 
-  let userId;
+  const issueUpdateData = { 
+    title: 'updated title'
+  };
+
+  let userId, issueId;
 
   after((done) => {   
     let serv = chai.request(server)
@@ -34,8 +38,8 @@ describe('Issues Routes', () => {
     });
   });
 
-  describe('Post issue', () => {
-    it('Should post new issue', (done) => {
+  describe('CRUD issue', () => {
+    it('Should CRUD issue when authorised', (done) => {
       const agent = chai.request.agent(server);
       
       agent
@@ -43,7 +47,7 @@ describe('Issues Routes', () => {
       .send(credentials)
       .end((err, res) => {
         userId = res.body.userId;
-        console.log('userId: ' + userId)
+
         agent
         .post('/login')
         .send(credentials)
@@ -55,10 +59,55 @@ describe('Issues Routes', () => {
             expect(res.body.status).to.equal(issueData.status);
             expect(res.body.title).to.equal(issueData.title);
             expect(res.body.ownerId).to.equal(userId);
-            res.should.have.status(201);            
-            done();
+            res.should.have.status(201);
+            issueId = res.body.issueId;
+            agent
+              .put('/issues/' + issueId)
+              .send(issueUpdateData)
+              .end((err, res) => {
+                res.should.have.status(201);
+                expect(res.body.title).to.equal(issueUpdateData.title);
+                agent
+                  .del('/issues/' + issueId)
+                  .end((err, res) => {
+                    res.should.have.status(200);
+                     agent
+                       .get('/issues')
+                       .end((err, res) => {
+                          res.should.have.status(200);
+                          res.body.forEach((item) => {
+                            expect(item.issueId).not.equal('updated title');
+                          });
+                          done();
+                       });                    
+                   });
+              });            
           });
         });
+      });
+    });
+
+    it ('Should not CRUD issue when not authorised', (done) => {
+      chai.request(server)
+      .post('/issues')  
+      .send(issueData)
+      .end((err, res) => {
+        res.should.have.status(403);
+
+        chai.request(server)
+        .put('/issues/' + issueId)
+        .send(issueUpdateData)
+        .end((err, res) => {
+          res.should.have.status(403);
+
+          chai.request(server)
+          .del('/issues/' + issueId)
+          .end((err, res) => {
+            res.should.have.status(403);
+
+            done();
+          })
+        });        
       });
     });
   });

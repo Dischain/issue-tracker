@@ -37,12 +37,14 @@ router.post('/issues', Users.isAuthenticated, (req, res) => {
   issueData.ownerId = req.user.userId;
 
   Issues.create(issueData)
-  .then(() => {
-      res.status(201); res.json(issueData);
+  .then((issue) => {
+    issueData.issueId = issue.issueId
+    res.status(201); 
+    res.json(issueData);
   })
   .catch((err) => {
-      res.status(500); 
-      res.json({message: 'Internal Server Error: ' + err });
+    res.status(500); 
+    res.json({message: 'Internal Server Error: ' + err });
   });
 });
 
@@ -51,12 +53,12 @@ router.put('/issues/:issueId', Users.isAuthenticated, (req, res) => {
   const updateData = req.body;
 
   Issues.update(issueId, updateData)
-  .then(() => {
-      res.status(201); res.end();
+  .then((issue) => {
+    res.status(201); res.json(issue);
   })
   .catch((err) => {
-      res.status(500); 
-      res.json({message: 'Internal Server Error: ' + err });
+    res.status(500); 
+    res.json({message: 'Internal Server Error: ' + err });
   });
 });
 
