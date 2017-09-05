@@ -6,13 +6,10 @@ const User = require('../models/user.js');
 
 let init = function() {
   passport.serializeUser(function(user, done) {
-    console.log('passport: serializeUser')
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    console.log('passport: deserializeUser')
-    console.log(id)
+  passport.deserializeUser(function(id, done) {    
     User.find({ _id: id })
       .then((user) => done(null, user));
   });
@@ -34,12 +31,12 @@ let init = function() {
               done(null, user) : 
               done(null, false, { message: 'Incorrect username or password'})
           })
-          .catch(err => done(err))
+          .catch(err => done(err));
       })
-      .catch(err => done(err))
+      .catch(err => done(err));
   }));
 
   return passport;
-}
+};
 
 module.exports = init();

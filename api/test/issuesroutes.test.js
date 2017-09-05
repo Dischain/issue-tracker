@@ -28,7 +28,7 @@ describe('Issues Routes', () => {
   let userId, issueId;
 
   after((done) => {   
-    let serv = chai.request(server)
+    let serv = chai.request(server);
     serv
     .delete('/users')
     .end((err, res) => {
@@ -87,7 +87,7 @@ describe('Issues Routes', () => {
       });
     });
 
-    it ('Should not CRUD issue when not authorised', (done) => {
+    it('Should not CRUD issue when not authorised', (done) => {
       chai.request(server)
       .post('/issues')  
       .send(issueData)
@@ -106,7 +106,7 @@ describe('Issues Routes', () => {
             res.should.have.status(403);
 
             done();
-          })
+          });
         });        
       });
     });

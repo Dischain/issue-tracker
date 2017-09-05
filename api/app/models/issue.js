@@ -38,7 +38,6 @@ function deleteAll() {
 }
 
 function update(issueId, updateData) {
-  console.log(updateData);
   return IssueModel.findOne({ issueId: issueId })
   .then((issue) => {
       Object.keys(issue._doc).forEach((key) => {

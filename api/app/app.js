@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser  = require('body-parser');
 const express_session = require('express-session');
-const redis   = require("redis");
+const redis   = require('redis');
 const RedisStore = require('connect-redis')(express_session);
 
 const config = require('./config');
@@ -26,7 +26,7 @@ app.use(express_session({
   saveUninitialized: config.session.saveUninitialized,
   resave: config.session.resave
 }));
-app.use(passport.initialize())
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', issueRouter);

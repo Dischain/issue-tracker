@@ -13,7 +13,7 @@ router.get('/issues', Users.isAuthenticated, (req, res) => {
   .catch((err) => {
     res.status(500).
     json({ message: 'Internal Server Error: ' + err });
-  })
+  });
 });
 
 router.get('/issues/:status', Users.isAuthenticated, (req, res) => {
@@ -38,7 +38,7 @@ router.post('/issues', Users.isAuthenticated, (req, res) => {
 
   Issues.create(issueData)
   .then((issue) => {
-    issueData.issueId = issue.issueId
+    issueData.issueId = issue.issueId;
     res.status(201); 
     res.json(issueData);
   })

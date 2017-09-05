@@ -32,8 +32,6 @@ function findAll() {
 }
 
 function isAuthenticated(req, res, next) {
-  console.log('user model: isAuthenticated ' + req.isAuthenticated())
-  console.log(req.user);
 	if(req.isAuthenticated()){
 		next();
 	}else{

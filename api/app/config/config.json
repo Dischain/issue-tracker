@@ -11,7 +11,9 @@
       "host": "localhost",
       "port": "6379",
       "ttl": "3600",
-      "secret": "secret"
+      "secret": "secret",
+      "saveUninitialized": false,
+      "resave": false
     },
     "app": {
       "port": "3000",

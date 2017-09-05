@@ -52,7 +52,7 @@ describe('User Routes', () => {
         expect(res.body.email).to.equal(credentials.email);
         expect(res.body.userId).to.equal(userId);
         done();
-      })
+      });
     });
   });
 
@@ -77,7 +77,7 @@ describe('User Routes', () => {
       .send({ email: 'invalid', password: 'invalid', userName: 'invalid'})
       .end((err, res) => {
         res.should.have.status(403);
-      })
+      });
     });
   });
 });

@@ -73,7 +73,7 @@ router.post('/register', (req, res) => {
           userName: user.userName,
           email: user.email,
           userId: user.userIds
-        }
+        };
 
         res.status(201);
         res.json(user);
@@ -93,11 +93,11 @@ router.post('/login', (req, res, next) => {
     if (user) {
       req.logIn(user, (err) => {
         if (err) return next(err);
-        console.log('user logged in'); console.log(req.user); console.log(req.isAuthenticated()); console.log(req.session);
+
         res.redirect('/users');
       });
     } else {
-      console.log('post login redirecting');
+
       res.redirect('/');
     }
   })(req, res, next);
