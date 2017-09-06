@@ -4,6 +4,8 @@
   "description": "simple issue tracker app",
   "main": "index.js",
   "scripts": {
+    "start-watch": "./node_modules/nodemon/bin/nodemon.js --exec npm run start-dev",
+    "start-dev": "node api/app/app.js",
     "test-api": "mocha --reporter spec ./api/test --recursive"
   },
   "keywords": [
