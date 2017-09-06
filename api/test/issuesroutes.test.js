@@ -92,18 +92,18 @@ describe('Issues Routes', () => {
       .post('/issues')  
       .send(issueData)
       .end((err, res) => {
-        res.should.have.status(403);
+        res.should.have.status(401);
 
         chai.request(server)
         .put('/issues/' + issueId)
         .send(issueUpdateData)
         .end((err, res) => {
-          res.should.have.status(403);
+          res.should.have.status(401);
 
           chai.request(server)
           .del('/issues/' + issueId)
           .end((err, res) => {
-            res.should.have.status(403);
+            res.should.have.status(401);
 
             done();
           });

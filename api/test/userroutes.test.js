@@ -62,11 +62,7 @@ describe('User Routes', () => {
       .post('/login')
       .send(credentials)
       .end((err, res) => {
-        res.should.have.status(200);
-        expect(res.body.length).to.equal(1);
-        expect(res.body[0].userName).to.equal(credentials.userName);
-        expect(res.body[0].email).to.equal(credentials.email);
-        expect(res.body[0].userId).to.equal(userId);
+        res.should.have.status(200);        
         done();
       });
     });
@@ -76,7 +72,7 @@ describe('User Routes', () => {
       .post('/login')
       .send({ email: 'invalid', password: 'invalid', userName: 'invalid'})
       .end((err, res) => {
-        res.should.have.status(403);
+        res.should.have.status(401);
       });
     });
   });

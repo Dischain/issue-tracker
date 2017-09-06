@@ -5,14 +5,14 @@ const passport = require('passport');
 
 const Users = require('../models/user.js');
 
-router.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.redirect('/users');
-  } else {
-    res.status(403);
-    res.json({ 'msg': 'Please log in' });
-  }
-});
+// router.get('/', (req, res) => {
+//   if (req.isAuthenticated()) {
+//     res.redirect('/users');
+//   } else {
+//     res.status(403);
+//     res.json({ 'msg': 'Please log in' });
+//   }
+// });
 
 router.get('/users/:userId', (req, res) => {
   const userId = req.params.userId;
@@ -34,9 +34,6 @@ router.get('/users/:userId', (req, res) => {
 router.get('/users', (req, res) => {
   Users.findAll()
   .then((users) => {
-    console.log('users get all');
-    console.log(req.session);
-    console.log(req.isAuthenticated());
     res.json(users);
   })
   .catch((err) => {
@@ -65,7 +62,6 @@ router.post('/register', (req, res) => {
     if(user){
       res.status(409);
       res.json({ message: 'Username already exists' });
-      res.redirect('/register');
     } else {
       Users.create(credentials)
       .then((user) => {
@@ -94,11 +90,11 @@ router.post('/login', (req, res, next) => {
       req.logIn(user, (err) => {
         if (err) return next(err);
 
-        res.redirect('/users');
+        res.sendStatus(200);
       });
     } else {
 
-      res.redirect('/');
+      res.sendStatus(401);
     }
   })(req, res, next);
 });
@@ -108,7 +104,7 @@ router.get('/logout', function(req, res) {
 
   req.session = null;
 
-  res.redirect('/');
+  res.sendStatus(200);
 });
 
 module.exports = router;
