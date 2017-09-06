@@ -42,14 +42,14 @@ router.get('/users', (req, res) => {
   });
 });
 
-router.delete('/users', (req, res) => {
-  Users.deleteAll()
-  .then(() => { res.status(200); res.end(); })
-  .catch((err) => {
-    res.status(500).
-    json({ message: 'Internal Server Error: ' + err });
-  });
-});
+// router.delete('/users', (req, res) => {
+//   Users.deleteAll()
+//   .then(() => { res.status(200); res.end(); })
+//   .catch((err) => {
+//     res.status(500).
+//     json({ message: 'Internal Server Error: ' + err });
+//   });
+// });
 
 router.post('/register', (req, res) => {
   const credentials = {

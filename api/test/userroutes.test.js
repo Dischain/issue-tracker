@@ -2,7 +2,9 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+
 const server = require('../app/app.js');
+const Users = require('../app/models/user.js');
 
 const expect = chai.expect;
 
@@ -11,9 +13,7 @@ const should = chai.should();
 
 describe('User Routes', () => {
   after((done) => {   
-    chai.request(server)
-    .delete('/users')
-    .end(() => done());
+    Users.deleteAll().then(() => done());
   });
 
   const credentials = {

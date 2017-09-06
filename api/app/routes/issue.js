@@ -73,13 +73,13 @@ router.delete('/issues/:issueId', Users.isAuthenticated, (req, res) => {
   });
 });
 
-router.delete('/issues', (req, res) => {
-  Issues.deleteAll()
-  .then(() => { res.status(200); res.end(); })
-  .catch((err) => {
-    res.status(500); 
-    res.json({message: 'Internal Server Error: ' + err });
-  });
-});
+// router.delete('/issues', (req, res) => {
+//   Issues.deleteAll()
+//   .then(() => { res.status(200); res.end(); })
+//   .catch((err) => {
+//     res.status(500); 
+//     res.json({message: 'Internal Server Error: ' + err });
+//   });
+// });
 
 module.exports = router;

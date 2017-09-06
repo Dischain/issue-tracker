@@ -2,7 +2,10 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+
 const server = require('../app/app.js');
+const Users = require('../app/models/user.js');
+const Issues = require('../app/models/issue.js');
 
 const expect = chai.expect;
 
@@ -28,13 +31,8 @@ describe('Issues Routes', () => {
   let userId, issueId;
 
   after((done) => {   
-    let serv = chai.request(server);
-    serv
-    .delete('/users')
-    .end((err, res) => {
-      serv
-      .delete('/issues')
-      .end(() => done());
+    Users.deleteAll().then(() => {
+      Issues.deleteAll().then(() => done());
     });
   });
 
