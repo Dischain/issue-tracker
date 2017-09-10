@@ -12,3 +12,9 @@ gulp.task('build', function() {
   .pipe(source('bundle.js'))
   .pipe(gulp.dest('./client/public'));
 });
+
+gulp.task('watch', ['build'], function () {
+  gulp.watch('*.jsx', ['build']);
+});
+
+gulp.task('default', ['watch']);

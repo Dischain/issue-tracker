@@ -1,9 +1,8 @@
 'use strict';
 
-const React = require('react');
-const Router = require('react-router');
-const ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const Routes = require('./routes.jsx');
+import Routes from './routes.jsx';
 
-ReactDOM.render(<Routes />, document.getElementById('container'));
+ReactDOM.render(Routes, document.getElementById('container'));
