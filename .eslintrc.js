@@ -5,10 +5,6 @@ module.exports = {
   },
   "extends": "eslint:recommended",
   "rules": {
-      // "indent": [
-      //     "error",
-      //     2
-      // ],
       "linebreak-style": [
           "error",
           "windows"
@@ -31,6 +27,7 @@ module.exports = {
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "sourceType": "module",
   }
 };
