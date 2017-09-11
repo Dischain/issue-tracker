@@ -25,14 +25,6 @@ function authenticate(nextState, replace) {
   }
 }
 
-// const Routes = (
-//   <Router history={browserHistory}>
-//       <Route component={Layout}>
-//       <Route path='/' component={Layout} onEnter={authenticate}/>
-//       <Route path='/login' component={Login}/>
-//       </Route>
-//   </Router>
-// );
 const Routes = (
   <Router history={browserHistory}>
     <Route path='/login' component={Login}/>
@@ -42,6 +34,16 @@ const Routes = (
     </Route>
   </Router>
 );
+
+// const Routes = (
+//   <Router history={browserHistory}>
+//     <Route component={Layout}>
+//       <Route path='/login' component={Login}/>
+//       <Route path='/register' component={Register}/>
+//       <Route path='/' component={Main} onEnter={authenticate}/>
+//     </Route>
+//   </Router>
+// );
 
 // <Route path='users/:userId' component={User}/>
 export default Routes;
