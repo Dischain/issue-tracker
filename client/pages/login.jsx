@@ -2,15 +2,22 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 import LonginAction from '../actions/login.jsx';
 import ControlledInput from '../components/controlledinput.jsx';
 
 const Login = React.createClass({
-  handleSubmit(event) {
-    // validate input
-    LonginAction.Login(event.target.elements);
+  getInitialState() {
+    return { email: '', password: '' };
+  },
+
+  onEmailChange(event) {
+    this.setState({ email: event.target.value });
+  },
+
+  onPasswordChange(event) {
+    this.setState({ password: event.target.value });
   },
 
   getEmailValidaytionState(value) {
@@ -27,6 +34,14 @@ const Login = React.createClass({
       return 'error';
   },
 
+  onSubmit(event) {
+    event.preventDefault();
+    // validate input
+    LonginAction.Login(this.state);
+    console.log('submit');
+    console.log(this.state);
+  },
+
   render() {
     return (
       <div>
@@ -38,15 +53,24 @@ const Login = React.createClass({
             type={'text'}
             placeholder={'Enter your email'}
             helpBlock={''}
+            value={this.state.email}
+            onChange={this.onEmailChange}
           />
           <ControlledInput
             constrolId={'password'}
             validationState={this.getPasswordValidationState}
             label={'Password'}
-            type={'text'}
+            type={'password'}
             placeholder={'Enter your password'}
             helpBlock={'Password should contains minimum 8 characters'}
+            value={this.state.password}
+            onChange={this.onPasswordChange}
           />
+          <Button type="submit" 
+            onClick={this.onSubmit}
+            className='btn btn-primary'>
+            Submit
+          </Button>
         </Form>
         
         <Link to='/register'>Register</Link>
