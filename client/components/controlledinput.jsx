@@ -4,26 +4,18 @@ import React from 'react';
 import { FormControl, ControlLabel, FormGroup, HelpBlock } from 'react-bootstrap';
 
 const ControlledInput = React.createClass({
-  getInitialState() {
-    return { value: '' };
-  },
-
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  },
-
   render() {
     return (
       <FormGroup
         constrolId={this.props.constrolId}
-        validationState={this.props.validationState(this.state.value)}
+        validationState={this.props.value === '' ? null : this.props.validationState(this.props.value)}
       >
         <ControlLabel>{this.props.label}</ControlLabel>
         <FormControl 
           type={this.props.type}
-          value={this.state.value}
+          value={this.props.value}
           placeholder={this.props.placeholder}
-          onChange={this.handleChange}
+          onChange={this.props.onChange}
         />
         <FormControl.Feedback/>
         <HelpBlock>{this.props.helpBlock}</HelpBlock>
