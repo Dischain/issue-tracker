@@ -2,12 +2,12 @@
 
 import React from 'react';
 import Reflux from 'reflux';
-import LoginAction from './actions/login.jsx';
-import LoginStore from './stores/login.jsx';
+
+import AuthStore from './stores/auth.jsx';
 
 const Layout = React.createClass({
   mixins: [
-    Reflux.listenTo(LoginStore, 'onLogin')
+    Reflux.listenTo(AuthStore, 'onLogin')
   ],
 
   getInitialState() {
@@ -15,15 +15,16 @@ const Layout = React.createClass({
   },
 
   onLogin(userData) {
+    console.log('login');
     this.setState({ curUser: userData });
+    console.log(this.context);
   },
 
   componentDidMount() {
-    LoginStore.fetchUser();
+    AuthStore.fetchUser();
   },
 
   render() {
-    console.log(this.props.location.pathname);
     return (
       <div>
         <p>Menu</p>

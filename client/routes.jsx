@@ -14,10 +14,13 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 //import createHistory from 'history/createBrowserHistory';
 //const browserHistory = createHistory();
 
-import LoginStore from './stores/login.jsx';
+import AuthStore from './stores/auth.jsx';
 
 function authenticate(nextState, replace) {
-  if (LoginStore.getUser() !== null) {
+  console.log(AuthStore.getUser());
+  console.log(AuthStore.getUser() != null);
+  if (AuthStore.getUser() != null) {
+    console.log('redirecting...');
     replace('/issues');
   } else {
     console.log('not authenticated');
@@ -29,8 +32,8 @@ const Routes = (
   <Router history={browserHistory}>
     <Route path='/login' component={Login}/>
     <Route path='/register' component={Register}/>
-    <Route component={Layout} onEnter={authenticate}>
-      <Route path='/' component={Main}/>
+    <Route component={Layout}>
+      <Route path='/' component={Main} onEnter={authenticate}/>
     </Route>
   </Router>
 );
