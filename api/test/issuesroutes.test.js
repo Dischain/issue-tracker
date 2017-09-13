@@ -44,7 +44,7 @@ describe('Issues Routes', () => {
       .post('/register')
       .send(credentials)
       .end((err, res) => {
-        userId = res.body.userId;
+        userId = JSON.parse(res.body).userId;
 
         agent
         .post('/login')
@@ -54,17 +54,17 @@ describe('Issues Routes', () => {
           .post('/issues')
           .send(issueData)
           .end((err, res) => {
-            expect(res.body.status).to.equal(issueData.status);
-            expect(res.body.title).to.equal(issueData.title);
-            expect(res.body.ownerId).to.equal(userId);
+            expect(JSON.parse(res.body).status).to.equal(issueData.status);
+            expect(JSON.parse(res.body).title).to.equal(issueData.title);
+            expect(JSON.parse(res.body).ownerId).to.equal(userId);
             res.should.have.status(201);
-            issueId = res.body.issueId;
+            issueId = JSON.parse(res.body).issueId;
             agent
               .put('/issues/' + issueId)
               .send(issueUpdateData)
               .end((err, res) => {
                 res.should.have.status(201);
-                expect(res.body.title).to.equal(issueUpdateData.title);
+                expect(JSON.parse(res.body).title).to.equal(issueUpdateData.title);
                 agent
                   .del('/issues/' + issueId)
                   .end((err, res) => {
@@ -73,7 +73,7 @@ describe('Issues Routes', () => {
                        .get('/issues')
                        .end((err, res) => {
                           res.should.have.status(200);
-                          res.body.forEach((item) => {
+                          JSON.parse(res.body).forEach((item) => {
                             expect(item.issueId).not.equal('updated title');
                           });
                           done();

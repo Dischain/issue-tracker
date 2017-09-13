@@ -8,7 +8,7 @@ const Users = require('../models/user.js');
 router.get('/issues', Users.isAuthenticated, (req, res) => {
   Issues.findAll()
   .then((data) => {
-    res.json(data);
+    res.json(JSON.stringify(data));
   })
   .catch((err) => {
     res.status(500).
@@ -23,7 +23,7 @@ router.get('/issues/:status', Users.isAuthenticated, (req, res) => {
   Issues.filterByStatus(criteria)
     .then((issues) => {
       const metadata = { total_count: issues.length };
-      res.json({ _metadata: metadata, records: issues });
+      res.json(JSON.stringify({ _metadata: metadata, records: issues }));
     })
     .catch((err) => {
       res.status(500).
@@ -39,8 +39,7 @@ router.post('/issues', Users.isAuthenticated, (req, res) => {
   Issues.create(issueData)
   .then((issue) => {
     issueData.issueId = issue.issueId;
-    res.status(201); 
-    res.json(issueData);
+    res.status(201).json(JSON.stringify(issueData));
   })
   .catch((err) => {
     res.status(500); 
@@ -54,7 +53,7 @@ router.put('/issues/:issueId', Users.isAuthenticated, (req, res) => {
 
   Issues.update(issueId, updateData)
   .then((issue) => {
-    res.status(201); res.json(issue);
+    res.status(201).json(JSON.stringify(issue));
   })
   .catch((err) => {
     res.status(500); 

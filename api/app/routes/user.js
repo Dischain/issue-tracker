@@ -20,9 +20,9 @@ router.get('/users/:userId', (req, res) => {
   Users.findById(userId)
   .then((user) => {
     if (user) {
-      res.json(user);
+      res.json(JSON.stringify(user));
     } else {
-      res.status(404); res.end();
+      res.sendStatus(404);
     }
   })
   .catch((err) => {
@@ -34,7 +34,7 @@ router.get('/users/:userId', (req, res) => {
 router.get('/users', (req, res) => {
   Users.findAll()
   .then((users) => {
-    res.json(users);
+    res.json(JSON.stringify(users));
   })
   .catch((err) => {
     res.status(500).
@@ -68,11 +68,10 @@ router.post('/register', (req, res) => {
         const userData = {
           userName: user.userName,
           email: user.email,
-          userId: user.userIds
+          userId: user.userId
         };
 
-        res.status(201);
-        res.json(user);
+        res.status(201).json(JSON.stringify(userData));
       })
       .catch((err) => {
         res.status(500).

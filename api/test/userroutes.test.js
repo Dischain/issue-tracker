@@ -30,12 +30,12 @@ describe('User Routes', () => {
       .post('/register')
       .send(credentials)
       .end((err, res) => {
-        expect(res.body.userName).to.equal(credentials.userName);
-        expect(res.body.email).to.equal(credentials.email);
-        res.body.should.have.property('userId');
+        expect(JSON.parse(res.body).userName).to.equal(credentials.userName);
+        expect(JSON.parse(res.body).email).to.equal(credentials.email);
+        expect(JSON.parse(res.body)).to.haveOwnProperty('userId');
         res.should.have.status(201);
 
-        userId = res.body.userId;
+        userId = JSON.parse(res.body).userId;
 
         done();
       });
@@ -48,9 +48,9 @@ describe('User Routes', () => {
       .get(userPath)
       .end((err, res) => {
         res.should.have.status(200);
-        expect(res.body.userName).to.equal(credentials.userName);
-        expect(res.body.email).to.equal(credentials.email);
-        expect(res.body.userId).to.equal(userId);
+        expect(JSON.parse(res.body).userName).to.equal(credentials.userName);
+        expect(JSON.parse(res.body).email).to.equal(credentials.email);
+        expect(JSON.parse(res.body).userId).to.equal(userId);
         done();
       });
     });
