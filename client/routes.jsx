@@ -30,10 +30,11 @@ function authenticate(nextState, replace) {
 const Routes = (
   <Router history={browserHistory}>
     
-    <Route component={Layout}>
+    <Route component={Layout} history={browserHistory}>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/' component={Main} onEnter={authenticate}/>
+      <Route path='/issues' component={Main}/>
     </Route>
   </Router>
 );

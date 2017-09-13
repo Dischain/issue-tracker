@@ -17,13 +17,9 @@ const Layout = React.createClass({
   onAuth(userData) {
     this.setState({ curUser: userData });
     console.log(this.state);
-    
-    // console.log('auth trigered');
-    // this.setState({ curUser: userData });
-    // console.log(this.state);
-    // console.log(this.context.router);
-    // if (this.state.curUser != null)
-    //   this.context.replace('/');
+    if (this.state.curUser != null){
+      this.props.history.replace('/issues');
+    }
   },
 
   componentDidMount() {
