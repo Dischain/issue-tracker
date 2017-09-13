@@ -38,8 +38,6 @@ const Login = React.createClass({
     event.preventDefault();
     // validate input
     LonginAction.Login(this.state);
-    console.log('submit');
-    console.log(this.state);
   },
 
   render() {

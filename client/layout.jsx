@@ -7,20 +7,27 @@ import AuthStore from './stores/auth.jsx';
 
 const Layout = React.createClass({
   mixins: [
-    Reflux.listenTo(AuthStore, 'onLogin')
+    Reflux.listenTo(AuthStore, 'onAuth')
   ],
 
   getInitialState() {
-    return { user: null };
+    return { curUser: null };
   },
 
-  onLogin(userData) {
-    console.log('login');
+  onAuth(userData) {
     this.setState({ curUser: userData });
-    console.log(this.context);
+    console.log(this.state);
+    
+    // console.log('auth trigered');
+    // this.setState({ curUser: userData });
+    // console.log(this.state);
+    // console.log(this.context.router);
+    // if (this.state.curUser != null)
+    //   this.context.replace('/');
   },
 
   componentDidMount() {
+    console.log('component did mount');
     AuthStore.fetchUser();
   },
 

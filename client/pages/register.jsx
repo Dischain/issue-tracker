@@ -49,8 +49,6 @@ const Register = React.createClass({
     event.preventDefault();
     // validate input
     RegisterAction.Register(this.state);
-    console.log('submit');
-    console.log(this.state);
   },
 
   render() {

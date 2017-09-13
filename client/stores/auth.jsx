@@ -14,9 +14,8 @@ const AuthStore = Reflux.createStore({
   },
 
   fetchUser() {
-    console.log('context' + this.context);
     let curUser = sessionStorage.getItem('user');
-
+    console.log('cur user: ' + curUser);
     if (curUser) {
       _user = JSON.parse(curUser);
       this.trigger(_user);
@@ -36,9 +35,12 @@ const AuthStore = Reflux.createStore({
     })
     .then((res) => {
       if (res.status === 200) {
-        _user = res.body;
-        sessionStorage.setItem('user', JSON.stringify(_user));
-        this.trigger(_user);
+        return res.json()
+          .then((json) => {
+            _user = JSON.parse(json);
+            sessionStorage.setItem('user', JSON.stringify(_user));      
+            this.trigger(_user);
+          });
       } else {
         this.trigger(null);
       }
@@ -58,11 +60,15 @@ const AuthStore = Reflux.createStore({
       body: JSON.stringify(userData)
     })
     .then((res) => {
+      console.log(res.status);
       if (res.status === 201) {
-        _user = res.body;
-        console.log(_user);
-        sessionStorage.setItem('user', JSON.stringify(res.body));
-        this.trigger(res.body);
+        return res.json()
+          .then((json) => {
+            _user = JSON.parse(json);
+            console.log(_user);
+            sessionStorage.setItem('user', JSON.stringify(_user));
+            this.trigger(_user);
+          });
       } else {
         this.trigger(null);
       }

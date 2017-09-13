@@ -17,9 +17,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import AuthStore from './stores/auth.jsx';
 
 function authenticate(nextState, replace) {
-  console.log(AuthStore.getUser());
-  console.log(AuthStore.getUser() != null);
   if (AuthStore.getUser() != null) {
+    console.log(AuthStore.getUser());
     console.log('redirecting...');
     replace('/issues');
   } else {
@@ -30,9 +29,10 @@ function authenticate(nextState, replace) {
 
 const Routes = (
   <Router history={browserHistory}>
-    <Route path='/login' component={Login}/>
-    <Route path='/register' component={Register}/>
+    
     <Route component={Layout}>
+      <Route path='/login' component={Login}/>
+      <Route path='/register' component={Register}/>
       <Route path='/' component={Main} onEnter={authenticate}/>
     </Route>
   </Router>
