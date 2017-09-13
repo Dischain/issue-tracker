@@ -57,7 +57,6 @@ router.post('/register', (req, res) => {
     'password': req.body.password,
     'email': req.body.email
   };
-  console.log(req.body);
   Users.find({ email: credentials.email, socialId: null })
   .then((user) => {
     if(user){
@@ -84,7 +83,6 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
-  console.log(req.body);
   passport.authenticate('local', (err, user, info) => {
     if (err) return next(err);
 
@@ -92,7 +90,13 @@ router.post('/login', (req, res, next) => {
       req.logIn(user, (err) => {
         if (err) return next(err);
 
-        res.sendStatus(200);
+        let userData = {
+          userName: user.userName,
+          email: user.email,
+          userId: user.userId
+        };
+
+        res.status(200).json(JSON.stringify(userData));
       });
     } else {
 
