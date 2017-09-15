@@ -25,6 +25,10 @@ function findById(issueId) {
   return IssueModel.findOne({issueId: issueId});
 }
 
+function findByOwnerId(ownerId) {
+  return IssueModel.find({ownerId: ownerId});
+}
+
 function findAll() {
   return IssueModel.find({});
 }
@@ -55,5 +59,6 @@ module.exports = {
   findAll: findAll,
   deleteById: deleteById,
   deleteAll: deleteAll,
-  update: update
+  update: update,
+  findByOwnerId: findByOwnerId
 };

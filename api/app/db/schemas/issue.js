@@ -13,7 +13,7 @@ const IssueSchema = new Schema({
   title: { type: String, trim: true, required: true },
   completionDate: { type: Date },
 
-  _owner: { type: Schema.Types.ObjectId, ref: 'user', require: true }
+  ownerId: { type: Number, require: true }
 }, {
   timestamps: true
 });

@@ -31,9 +31,22 @@ router.get('/issues/:status', Users.isAuthenticated, (req, res) => {
     });
 });
 
+router.get('/issues/user/:userId', Users.isAuthenticated, (req, res) => {
+  const userId = req.params.userId;
+
+  Issues.findByOwnerId(userId)
+    .then((issues) => {
+      const metadata = { total_count: issues.length };
+      res.json(JSON.stringify({ _metadata: metadata, records: issues }));
+    })
+    .catch((err) => {
+      res.status(500).
+      json({ message: 'Internal Server Error: ' + err });
+    });
+});
+
 router.post('/issues', Users.isAuthenticated, (req, res) => {
   const issueData = req.body;
-  issueData._owner = req.user._id;
   issueData.ownerId = req.user.userId;
 
   Issues.create(issueData)
