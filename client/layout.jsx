@@ -18,7 +18,7 @@ const Layout = React.createClass({
     this.setState({ curUser: userData });
     console.log(this.state);
     if (this.state.curUser != null){
-      this.props.history.replace('/issues');
+      this.props.history.replace('/user/' + userData.userId);
     }
   },
 
