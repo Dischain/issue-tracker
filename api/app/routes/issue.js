@@ -48,7 +48,7 @@ router.get('/issues/user/:userId', Users.isAuthenticated, (req, res) => {
 router.post('/issues', Users.isAuthenticated, (req, res) => {
   const issueData = req.body;
   issueData.ownerId = req.user.userId;
-
+  console.log(issueData); // <- debug
   Issues.create(issueData)
   .then((issue) => {
     issueData.issueId = issue.issueId;

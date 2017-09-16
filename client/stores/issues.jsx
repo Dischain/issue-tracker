@@ -11,6 +11,8 @@ const IssuesStore = Reflux.createStore({
     this.listenTo(IssuesAction.FetchUserIssues, 'onFetchUserIssues');
     this.listenTo(IssuesAction.FetchAllIssues, 'onFetchAllIssues');
     this.listenTo(IssuesAction.FetchIssuesByStatus, 'onFetchIssuesByStatus');
+
+    this.listenTo(IssuesAction.CreateIssue, 'onCreateIssue');
   },
 
   onFetchUserIssues(userId) {
@@ -65,7 +67,33 @@ const IssuesStore = Reflux.createStore({
     .catch((err) => {
       this.trigger(null);
     });
+  },
+
+  onCreateIssue(issueData) {
+    fetch('http://localhost:3001/issues', {
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST', 
+      body: JSON.stringify(issueData)
+    })
+    .then((res) => {
+      if (res.status === 201) {
+        return res.json()
+          .then((json) => {
+            const issue = JSON.parse(json);
+            _issues.push(issue);
+            this.trigger(_issues);
+          });
+      } else {
+        this.trigger(null);
+      }
+    })
+    .catch((err) => {
+      this.trigger(null);
+    });
   }
 });
 
-export default AuthStore;
+export default IssuesStore;
