@@ -10,14 +10,18 @@
     "session": {
       "host": "localhost",
       "port": "6379",
-      "ttl": "3600",
+      "ttl": "3600000",
       "secret": "secret",
       "saveUninitialized": false,
       "resave": false
     },
     "app": {
       "port": "3001",
-      "host": "localhost"
+      "host": "localhost",
+      "corsOptions": {
+        "origin": "http://localhost:3000",
+        "credentials": "true"
+      }
     }
   }, 
 
