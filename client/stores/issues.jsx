@@ -24,7 +24,10 @@ const IssuesStore = Reflux.createStore({
       if (res.status === 200) {
         return res.json()
           .then((json) => {
-            _issues = JSON.parse(json);
+            let data = JSON.parse(json);
+            _issues = _issues.concat(data.records);
+            console.log('after recieving from api:');
+            console.log(_issues);
             this.trigger(_issues);
           });
       } else {
@@ -32,7 +35,8 @@ const IssuesStore = Reflux.createStore({
       }
     })
     .catch((err) => {
-      this.trigger(null);
+      console.log(err);
+      //this.trigger(null);
     });
   },
 
@@ -97,7 +101,6 @@ const IssuesStore = Reflux.createStore({
           .then((json) => {
             const issue = JSON.parse(json);
             _issues.push(issue);
-            console.log(_issues);
             this.trigger(_issues);
           });
       } else {

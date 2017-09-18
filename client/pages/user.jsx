@@ -23,17 +23,17 @@ const User = React.createClass({
   },
 
   componentDidMount() {
-    const issue = {
-      status: 'new',
-      title: 'new issue'
-    };
-    IssuesAction.CreateIssue(issue);
-    console.log('user: component will mount');
-    console.log(this.state);
+    // const issue = {
+    //   status: 'new',
+    //   title: 'new issue'
+    // };
+    // IssuesAction.CreateIssue(issue);
+    // console.log('user: component will mount');
+    // console.log(this.state);
     // console.log(this.state);
     // console.log(this.props);
     // console.log(this.context);
-    //IssuesAction.FetchUserIssues(this.props.curUser.userId);
+    IssuesAction.FetchUserIssues(this.props.curUser.userId);
   },
 
   onIssue(data) {
