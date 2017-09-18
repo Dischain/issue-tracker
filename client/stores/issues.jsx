@@ -16,7 +16,10 @@ const IssuesStore = Reflux.createStore({
   },
 
   onFetchUserIssues(userId) {
-    fetch('http://localhost:3001/issues/user/' + userId)
+    fetch('http://localhost:3001/issues/user/' + userId, {
+      mode: 'cors',
+      credentials: 'include',
+    })
     .then((res) => {
       if (res.status === 200) {
         return res.json()
@@ -34,7 +37,10 @@ const IssuesStore = Reflux.createStore({
   },
 
   onFetchAllIssues() {
-    fetch('http://localhost:3001/issues')
+    fetch('http://localhost:3001/issues', {
+      mode: 'cors',
+      credentials: 'include',
+    })
     .then((json) => {
       if (res.status === 200) {
         return res.json()
@@ -52,7 +58,10 @@ const IssuesStore = Reflux.createStore({
   },
 
   onFetchIssuesByStatus(status) {
-    fetch('http://localhost:3001/issues' + status)
+    fetch('http://localhost:3001/issues' + status, {
+      mode: 'cors',
+      credentials: 'include',
+    })
     .then((res) => {
       if (res.status === 200) {
         return res.json()
@@ -70,28 +79,36 @@ const IssuesStore = Reflux.createStore({
   },
 
   onCreateIssue(issueData) {
+    console.log('creating issue');
     fetch('http://localhost:3001/issues', {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
+      mode: 'cors',
+      credentials: 'include',
       method: 'POST', 
       body: JSON.stringify(issueData)
     })
     .then((res) => {
+      console.log('status: ' + res.status);
       if (res.status === 201) {
         return res.json()
           .then((json) => {
             const issue = JSON.parse(json);
             _issues.push(issue);
+            console.log(_issues);
             this.trigger(_issues);
           });
       } else {
+        console.log('null triggered');
         this.trigger(null);
       }
     })
     .catch((err) => {
-      this.trigger(null);
+      // console.log('err trigered');
+      // console.log(err);
+      // this.trigger(null);
     });
   }
 });

@@ -30,13 +30,19 @@ const AuthStore = Reflux.createStore({
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      method: 'POST', 
+      mode: 'cors',
+      method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(userData)
     })
     .then((res) => {
       if (res.status === 200) {
         return res.json()
           .then((json) => {
+            console.log('cookies:');
+            console.log(document.cookie);
+            console.log(res);
+            console.log('end');
             _user = JSON.parse(json);
             sessionStorage.setItem('user', JSON.stringify(_user));      
             this.trigger(_user);
@@ -56,7 +62,9 @@ const AuthStore = Reflux.createStore({
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      method: 'POST', 
+      mode: 'cors',
+      method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(userData)
     })
     .then((res) => {
@@ -64,6 +72,10 @@ const AuthStore = Reflux.createStore({
       if (res.status === 201) {
         return res.json()
           .then((json) => {
+            console.log('cookies:');
+            console.log(document.cookie);
+            console.log(res.headers);
+            console.log('end');
             _user = JSON.parse(json);
             console.log(_user);
             sessionStorage.setItem('user', JSON.stringify(_user));

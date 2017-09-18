@@ -16,6 +16,18 @@ const app = express();
 const client  = redis.createClient();
 
 app.use(cors(config.app.corsOptions));
+app.use((req, res, next) => {
+  console.log('logged');
+  console.log(req.method);
+  if (req.method == 'OPTIONS') {
+    console.log('cors');
+    console.log(res.getHeaders());
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

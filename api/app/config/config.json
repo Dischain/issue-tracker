@@ -20,7 +20,9 @@
       "host": "localhost",
       "corsOptions": {
         "origin": "http://localhost:3000",
-        "credentials": "true"
+        "credentials": true,
+        "methods": ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+        "optionsSuccessStatus": "200"
       }
     }
   }, 
