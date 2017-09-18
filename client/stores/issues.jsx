@@ -5,6 +5,7 @@ import Reflux from 'reflux';
 import IssuesAction from'../actions/issues.jsx';
 
 let _issues = [];
+// let _issues = { issues: [], metadata: null };
 
 const IssuesStore = Reflux.createStore({
   init() {
