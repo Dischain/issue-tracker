@@ -27,8 +27,6 @@ const IssuesStore = Reflux.createStore({
           .then((json) => {
             let data = JSON.parse(json);
             _issues = _issues.concat(data.records);
-            console.log('after recieving from api:');
-            console.log(_issues);
             this.trigger(_issues);
           });
       } else {

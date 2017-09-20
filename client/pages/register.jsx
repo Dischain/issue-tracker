@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button ,Panel } from 'react-bootstrap';
 
 import RegisterAction from '../actions/register.jsx';
 import ControlledInput from '../components/controlledinput.jsx';
@@ -52,8 +52,9 @@ const Register = React.createClass({
   },
 
   render() {
+    const panelStyle = { maxWidth: 400, margin: '0 auto 10px' };
     return (
-      <div>
+      <Panel style={panelStyle}>
         <Form>
           <ControlledInput
             constrolId={'userName'}
@@ -93,7 +94,7 @@ const Register = React.createClass({
         </Form>
         
         <Link to='/login'>Login</Link>
-      </div>
+      </Panel>
     );
   }
 });

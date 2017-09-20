@@ -3,6 +3,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import Menu from './components/menu.jsx';
+import Footer from './components/footer.jsx';
 import AuthStore from './stores/auth.jsx';
 
 const Layout = React.createClass({
@@ -16,7 +18,6 @@ const Layout = React.createClass({
 
   onAuth(userData) {
     this.setState({ curUser: userData });
-    console.log(this.state);
     if (this.state.curUser != null){
       this.props.history.replace('/user/' + userData.userId);
     }
@@ -30,9 +31,12 @@ const Layout = React.createClass({
   render() {
     return (
       <div>
-        <p>Menu</p>
+        <Menu 
+          curUser={this.state.curUser} 
+          path={this.props.location.pathname}
+        />
         {React.cloneElement(this.props.children, this.state)}
-        <p>Footer</p>
+        <Footer/>
       </div>
     );
   }

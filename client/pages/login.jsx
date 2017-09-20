@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Panel } from 'react-bootstrap';
 
 import LonginAction from '../actions/login.jsx';
 import ControlledInput from '../components/controlledinput.jsx';
@@ -41,8 +41,9 @@ const Login = React.createClass({
   },
 
   render() {
+    const panelStyle = { maxWidth: 400, margin: '0 auto 10px' };
     return (
-      <div>
+      <Panel style={panelStyle}>
         <Form>
           <ControlledInput
             constrolId={'email'}
@@ -72,7 +73,7 @@ const Login = React.createClass({
         </Form>
         
         <Link to='/register'>Register</Link>
-      </div>
+      </Panel>
     );
   }
 });
