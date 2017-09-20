@@ -2,9 +2,11 @@
 
 import React from 'react';
 import Reflux from 'reflux';
+import { Row } from 'react-bootstrap';
 
 import IssuesStore from '../stores/issues.jsx';
 import IssuesAction from '../actions/issues.jsx';
+import Sidebar from '../components/sidebar.jsx';
 
 const User = React.createClass({
   mixins: [
@@ -32,10 +34,12 @@ const User = React.createClass({
       return <li key={index}>{item.status} {item.title}</li>;
     });
     return (
-      <div>
-        <p>Hello, this is user page</p>
-        <ul>{IL}</ul>
-      </div>
+      <Row className='show-grid'>
+        <Sidebar curUser={this.props.curUser}/>
+        <div className='col-sm-9'>
+          <ul>{IL}</ul>
+        </div>
+      </Row>
     );
   }
 });
