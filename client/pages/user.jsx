@@ -7,6 +7,7 @@ import { Row } from 'react-bootstrap';
 import IssuesStore from '../stores/issues.jsx';
 import IssuesAction from '../actions/issues.jsx';
 import Sidebar from '../components/sidebar.jsx';
+import IssueTable from '../components/issuetable.jsx';
 
 const User = React.createClass({
   mixins: [
@@ -30,16 +31,13 @@ const User = React.createClass({
   },
 
   render() {
-    const IL = this.state.issues.map((item, index) => {
-      return <li key={index}>{item.status} {item.title}</li>;
-    });
     return (
-      <Row className='show-grid'>
+      <div className={'container'}>
         <Sidebar curUser={this.props.curUser}/>
-        <div className='col-sm-9'>
-          <ul>{IL}</ul>
+        <div className={'content'}>
+          <IssueTable issues={this.state.issues}/>
         </div>
-      </Row>
+      </div>
     );
   }
 });
